@@ -9,8 +9,8 @@ window.config(pady=5, padx=5)
 def miletokilometer():
     km = user_input.get()
     if km != "":
-        km = int(km) * 1.6
-        output_lbl.config(text=round(km))
+        km = round(float(km) * 1.689)
+        output_lbl.config(text=f"{km}")
     else:
         output_lbl.config(text=0)
 
