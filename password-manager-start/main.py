@@ -5,6 +5,24 @@ import pyperclip
 import json
 
 
+# ---------------------------- FIND PASSWORD ------------------------------- #
+def find_password():
+    website = website_name.get()
+    try:
+        with open("data.json", "r") as data:
+            jdata = json.load(data)
+    except FileNotFoundError:
+        messagebox.showinfo(title="Error", message="No Data File Found")
+    else:
+        if website in jdata:
+            email = jdata[website]['email']
+            password = jdata[website]['password']
+            messagebox.showinfo(title=website,
+                                message=f"Email: {email}\nPassword: {password}")
+        else:
+            messagebox.showinfo(title="Error", message=f"No details for the {website} exists.")
+
+
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def generate_password():
     letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u',
@@ -76,27 +94,29 @@ password_lbl = Label(text="Password:")
 password_lbl.grid(column=0, row=3)
 
 # Entry Website Name
-website_name = Entry(width=35)
-website_name.grid(column=1, row=1, columnspan=2)
+website_name = Entry(width=33)
+website_name.grid(column=1, row=1)
 website_name.focus()
 
 # Entry Email/Username Name
-email_username_name = Entry(width=35)
+email_username_name = Entry(width=51)
 email_username_name.grid(column=1, row=2, columnspan=2)
 email_username_name.insert(0, "surya@gmail.com")
 
 # Entry Email/Username Name
-password_text = Entry(width=20)
+password_text = Entry(width=33)
 password_text.grid(column=1, row=3)
 
 # Generate Password Button
-generate_password_btn = Button(text="Generate Password", command=generate_password)
+generate_password_btn = Button(text="Generate Password", command=generate_password, width=14)
 generate_password_btn.grid(column=2, row=3)
 
 # Add Button
-add_btn = Button(text="Add", width=36, command=save)
+add_btn = Button(text="Add", width=44, command=save)
 add_btn.grid(column=1, row=4, columnspan=2)
 
 # Search Button
+search_btn = Button(text="Search", command=find_password, width=14)
+search_btn.grid(column=2, row=1)
 
 window.mainloop()
