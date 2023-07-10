@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import messagebox
 from random import randint, shuffle, choice
 import pyperclip
+import json
 
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
@@ -32,17 +33,22 @@ def save():
     website = website_name.get()
     email = email_username_name.get()
     password_entry = password_text.get()
+    new_data = {website: {"email": email, "password": password_entry}}
 
     if len(website) == 0 or len(password_entry) == 0:
         messagebox.showinfo(title="Oops", message="Please don't leave any fields empty!")
     else:
-        is_ok = messagebox.askokcancel(title=website,
-                                       message=f"These are the details entered: \n Email: {email}\n "
-                                               f"Password: {password_entry} \nIs it ok to save?")
-
-        if is_ok:
-            with open("data.txt", "a") as data:
-                data.write(f"{website} | {email} | {password_entry}\n")
+        try:
+            with open("data.json", "r") as data:
+                jdata = json.load(data)
+        except FileNotFoundError:
+            with open("data.json", "w") as data:
+                json.dump(new_data, data, indent=4)
+        else:
+            jdata.update(new_data)
+            with open("data.json", "w") as data:
+                json.dump(jdata, data, indent=4)
+        finally:
             website_name.delete(0, END)
             password_text.delete(0, END)
 
@@ -70,7 +76,6 @@ password_lbl = Label(text="Password:")
 password_lbl.grid(column=0, row=3)
 
 # Entry Website Name
-
 website_name = Entry(width=35)
 website_name.grid(column=1, row=1, columnspan=2)
 website_name.focus()
@@ -91,5 +96,7 @@ generate_password_btn.grid(column=2, row=3)
 # Add Button
 add_btn = Button(text="Add", width=36, command=save)
 add_btn.grid(column=1, row=4, columnspan=2)
+
+# Search Button
 
 window.mainloop()
