@@ -1,11 +1,13 @@
 from twilio.rest import Client
-from flight_data import FlightData
+import smtplib
 
-TWILIO_ACCOUNT_SID = 'ACd0086696efce5ec5ae71e1e67602a517'
-TWILIO_AUTH_TOKEN = 'd1b7e32cb7ce2fefd769c822f66a3406'
-TWILIO_FROM_NUMBER = '+15736854664'
-TWILIO_TO_NUMBER = '+917021950921'
-
+TWILIO_ACCOUNT_SID = 'ACd0086696efce5ec5ae71e1e67602a5171'
+TWILIO_AUTH_TOKEN = 'ae7177411404aa3675705cc8985d08761'
+TWILIO_FROM_NUMBER = '+15736811212154664'
+TWILIO_TO_NUMBER = '+917021912122150921'
+MAIL_PROVIDER_SMTP_ADDRESS = "smtp.gmail.com"
+MY_EMAIL = "surya.scoe3154@gmail.com"
+MY_PASSWORD = "wveroqsqfybvdivlq"
 
 class NotificationManager:
 
@@ -18,3 +20,11 @@ class NotificationManager:
             to=TWILIO_TO_NUMBER,
             body=message
         )
+
+    def send_emails(self, emails, message):
+        with smtplib.SMTP(host=MAIL_PROVIDER_SMTP_ADDRESS) as connection:
+            connection.starttls()
+            connection.login(MY_EMAIL, MY_PASSWORD)
+            for email in emails:
+                connection.sendmail(from_addr=MY_EMAIL, to_addrs=email,
+                                    msg=f"Subject: New Low Price Flight!\n\n{message}".encode("utf-8"))
