@@ -3,7 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 
-# chrome_driver_path = "C:\\Users\\suryasingh04\\Downloads\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe"
+
 driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
 
 # Amazon
