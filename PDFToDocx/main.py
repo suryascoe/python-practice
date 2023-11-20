@@ -1,9 +1,9 @@
 from pdf2docx import Converter
 from pdf2docx import parse
 
-pdf_filepath = 'C:\\Users\\suryasingh04\\OneDrive - Nagarro\\Documents\\How to access your virtual resources.pdf'
+pdf_filepath = 'Your PDF File path - Replace "\" with "\\"'
 
-docx_filepath = 'C:\\Users\\suryasingh04\\Downloads\\ConvertedDoc.docx'
+docx_filepath = 'Your Docx File path - Replace "\" with "\\"'
 
 # To Convert
 # try:
